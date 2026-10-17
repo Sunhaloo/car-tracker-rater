@@ -1,0 +1,33 @@
+# Node.js dependencies
+node_modules/
+
+# secret environment files
+.env
+.env.*
+
+# NOTE: do allow `.env.example` files to be committed
+!.env.example
+
+# any log directories
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# any build / output directories
+dist/
+build/
+out/
+
+# any cache directories
+.cache/
+.parcel-cache/
+.eslintcache
+
+# remove VS Code's junk from the repository
+.vscode/
+
+# operating systems ( MacOS + Windows ) related junk
+.DS_Store
+Thumbs.db
