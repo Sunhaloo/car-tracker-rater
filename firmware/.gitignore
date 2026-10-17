@@ -1,0 +1,4 @@
+# `.gitignore` file for the ESP32-D `firmware` directory
+
+# `secrets.h` --> containing "your" WiFi and ThingSpeak crendentials
+secrets.h
