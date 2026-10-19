@@ -30,7 +30,7 @@ app.use(
 // convert front-end data into JS object
 app.use(express.json());
 
-// test route ==> proves the server is running
+// test route --> to check if server is running correctly
 app.get("/health", (req, res) => {
   res.json({ ok: true });
 });
@@ -43,7 +43,7 @@ app.use((err, req, res, next) => {
 });
 
 // start the server
-// NOTE: '0.0.0.0' ==> listen on all network interfaces so the mobile app can reach it, not only 'localhost'
+// NOTE: '0.0.0.0' ==> listen on all network interfaces so the mobile app can reach it not only 'localhost'
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on 'http://localhost:${PORT}'`);
 });
