@@ -1,4 +1,4 @@
-// import the `knex.js` file
+// import the `knex.js` file to create database connection
 const db = require("./knex");
 
 // create a asynchronous function ==> wait for connection
