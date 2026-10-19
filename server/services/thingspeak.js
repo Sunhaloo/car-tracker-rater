@@ -16,8 +16,12 @@ function toNumber(value) {
   // convert the string value to and actually number
   const number = Number(value);
 
+  // check if that `number` is actually a number of not
+  if (!Number.isFinite(number)) return null;
+
   // simply return the value for other functions
-  return Number.isFinite(number) ? number : null;
+  // INFO: remove `-0.0` in favour of ( simply ) 0
+  return number === 0 ? 0 : number;
 }
 
 // take one ThingSpeak row and convert it to one 'samples' table row
