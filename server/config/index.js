@@ -37,4 +37,9 @@ module.exports = {
   // `distance per row = speed * time` since the previous row --> but time is capped at this
   // NOTE: stops a long gap from being counted as driving at the last speed
   maxStepSeconds: 5,
+
+  // authentication --> register and login
+  jwtExpiresIn: "7d",
+  bcryptRounds: 10,
+  minPasswordLength: 8,
 };
