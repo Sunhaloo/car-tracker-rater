@@ -24,6 +24,7 @@ const { startSync } = require("./services/sync.js");
 // import our routers ==> uncomment each one when its file is created
 const authRouter = require("./routes/authRoutes.js");
 const tripRouter = require("./routes/tripRoutes.js");
+const deviceRouter = require("./routes/deviceRoutes.js");
 
 // create the actual 'express' application / server
 const app = express();
@@ -50,11 +51,16 @@ app.get("/health", (req, res) => {
   res.json({ ok: true });
 });
 
-// authentication routes ==>  register and login and me
+// authentication routes ==>  register / login / me
 app.use("/api/auth", authRouter);
+
 // trip routes ==> list / latest / one trip / track / events
-// WARNING: all the above endpoints need the token
+// WARNING: needs the JWT token to have access
 app.use("/api/trips", tripRouter);
+
+// device routes ==> list / add / change / remove
+// WARNING: needs the JWT token to have access
+app.use("/api/devices", deviceRouter);
 
 // error handler --> must come after the routes
 // NOTE: Express.js 5 sends errors thrown inside 'async' handlers here automatically
