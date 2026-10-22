@@ -132,5 +132,5 @@ router.get("/me", authenticate, async (req, res) => {
   res.json(user);
 });
 
-// make the `router` available to other files
+// make the `authRouter` available to other files
 module.exports = router;
