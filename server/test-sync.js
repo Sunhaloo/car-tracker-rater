@@ -1,7 +1,7 @@
 // import the data found in our `.env` file
 require("dotenv").config();
 
-// import the `knex.js` file to create database connection
+// create the database connection
 const db = require("./db/knex");
 // import the `syncAll` function from the `services/sync.js` file
 const { syncAll } = require("./services/sync");

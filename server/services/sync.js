@@ -8,8 +8,10 @@ const db = require("../db/knex");
 const config = require("../config");
 // import the `decrypt` function from the `services/encryption.js` file
 const { decrypt } = require("./encryption");
-// import the `fetchFeeds` function from `services/thingspeak.js`
+// import the `fetchFeeds` function from `services/thingspeak.js` file
 const { fetchFeeds } = require("./thingspeak");
+// import the `processDevice` function from the `services/trips.js` file
+const { processDevice } = require("./trips");
 
 // how many rows go into one `INSERT` command
 const INSERT_CHUNK = 500;
@@ -61,7 +63,7 @@ async function syncDevice(device) {
 // WARNING: guard ==> a slow run must not overlap with the next timer tick
 let running = false;
 
-// sync every device one after the other
+// sync every device one after the other ==> new samples then the trips pipeline
 async function syncAll() {
   // a run is already in progress ==> skip this timer tick ( see guard above )
   if (running) return;
@@ -79,8 +81,12 @@ async function syncAll() {
 
     // sync the devices one at a time
     for (const device of devices) {
+      // one failing device must not stop the others ==> log it and retry on the next tick
       try {
         const result = await syncDevice(device);
+
+        // turn the freshly inserted samples into trips ( assign, close, score )
+        await processDevice(device.id);
 
         // only log when there are actually new rows
         if (result.inserted > 0) {

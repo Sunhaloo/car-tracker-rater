@@ -33,4 +33,8 @@ module.exports = {
 
   // trips shorter than this get the rating "Not enough data"
   minTripDistanceKm: 1,
+
+  // `distance per row = speed * time` since the previous row --> but time is capped at this
+  // NOTE: stops a long gap from being counted as driving at the last speed
+  maxStepSeconds: 5,
 };
