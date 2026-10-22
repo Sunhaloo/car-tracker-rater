@@ -2,7 +2,7 @@
 require("dotenv").config();
 
 // import the `fetchFeeds` function from the `server/services/thingspeak.js` file
-const { fetchFeeds } = require("./services/thingspeak");
+const { fetchFeeds } = require("../services/thingspeak");
 
 // INFO: optional start date from the command line --> `node test-thingspeak.js 2026-10-16`
 const after = process.argv[2] ?? null;

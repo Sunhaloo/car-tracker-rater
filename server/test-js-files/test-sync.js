@@ -2,9 +2,9 @@
 require("dotenv").config();
 
 // create the database connection
-const db = require("./db/knex");
+const db = require("../db/knex");
 // import the `syncAll` function from the `services/sync.js` file
-const { syncAll } = require("./services/sync");
+const { syncAll } = require("../services/sync");
 
 // async arrow function in order to wait for `fetchFeeds` response
 (async () => {

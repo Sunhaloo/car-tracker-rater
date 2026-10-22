@@ -2,7 +2,7 @@
 require("dotenv").config();
 
 // import the `encrypt` and `decrypt` from the `server/encryption.js` file
-const { encrypt, decrypt } = require("./services/encryption");
+const { encrypt, decrypt } = require("../services/encryption");
 
 // create the plain text string
 const secret = "FAKEREADKEY12345";
