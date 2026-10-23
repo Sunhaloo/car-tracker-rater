@@ -75,6 +75,11 @@ app.use("/api/places", placeRouter);
 // error handler --> must come after the routes
 // NOTE: Express.js 5 sends errors thrown inside 'async' handlers here automatically
 app.use((err, req, res, next) => {
+  // malformed JSON in the request body is the client's mistake not ours
+  if (err.type === "entity.parse.failed") {
+    return res.status(400).json({ error: "Invalid JSON body" });
+  }
+
   console.error(err);
   res.status(500).json({ error: "Something went wrong" });
 });
