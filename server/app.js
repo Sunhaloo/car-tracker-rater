@@ -21,10 +21,11 @@ const cors = require("cors");
 // background job that copies ThingSpeak rows into the database
 const { startSync } = require("./services/sync.js");
 
-// import our routers ==> uncomment each one when its file is created
+// import our routers
 const authRouter = require("./routes/authRoutes.js");
 const tripRouter = require("./routes/tripRoutes.js");
 const deviceRouter = require("./routes/deviceRoutes.js");
+const statusRouter = require("./routes/statusRoutes.js");
 
 // create the actual 'express' application / server
 const app = express();
@@ -61,6 +62,10 @@ app.use("/api/trips", tripRouter);
 // device routes ==> list / add / change / remove
 // WARNING: needs the JWT token to have access
 app.use("/api/devices", deviceRouter);
+
+// status routes ==> ESP32 online / GPS and IMU colours / data age / last known position
+// WARNING: needs the JWT token to have access
+app.use("/api/status", statusRouter);
 
 // error handler --> must come after the routes
 // NOTE: Express.js 5 sends errors thrown inside 'async' handlers here automatically

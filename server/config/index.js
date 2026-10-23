@@ -10,7 +10,7 @@ module.exports = {
   tripCloseWaitMs: 3 * 60 * 1000,
 
   // hardware status ==> newest row older than this means the ESP32 is offline
-  offlineAfterMs: 60 * 1000,
+  offlineAfterMs: 90 * 1000,
 
   // how often 'sync' runs
   syncIntervalMs: 30 * 1000,
@@ -42,4 +42,8 @@ module.exports = {
   jwtExpiresIn: "7d",
   bcryptRounds: 10,
   minPasswordLength: 8,
+
+  // ThingSpeak `field6` ==> status bit flags
+  // WARNING: must match the firmware
+  statusBits: { gpsTalking: 1, gpsFix: 2, imu: 4 },
 };
