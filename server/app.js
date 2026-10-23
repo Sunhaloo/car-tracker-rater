@@ -26,6 +26,7 @@ const authRouter = require("./routes/authRoutes.js");
 const tripRouter = require("./routes/tripRoutes.js");
 const deviceRouter = require("./routes/deviceRoutes.js");
 const statusRouter = require("./routes/statusRoutes.js");
+const placeRouter = require("./routes/placeRoutes.js");
 
 // create the actual 'express' application / server
 const app = express();
@@ -66,6 +67,10 @@ app.use("/api/devices", deviceRouter);
 // status routes ==> ESP32 online / GPS and IMU colours / data age / last known position
 // WARNING: needs the JWT token to have access
 app.use("/api/status", statusRouter);
+
+// place routes ==> personal places ( home, university, ... ) --> relabel finished trips
+// WARNING: needs the JWT token to have access
+app.use("/api/places", placeRouter);
 
 // error handler --> must come after the routes
 // NOTE: Express.js 5 sends errors thrown inside 'async' handlers here automatically

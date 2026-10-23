@@ -46,4 +46,11 @@ module.exports = {
   // ThingSpeak `field6` ==> status bit flags
   // WARNING: must match the firmware
   statusBits: { gpsTalking: 1, gpsFix: 2, imu: 4 },
+
+  // geographic places and labels
+  defaultPlaceRadiusM: 150,
+  placeRadiusMinM: 20,
+  placeRadiusMaxM: 2000,
+  // INFO: further than this from every town ==> show raw coordinates
+  townMaxDistanceM: 6000,
 };

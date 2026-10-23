@@ -4,6 +4,8 @@
 const db = require("../db/knex");
 // import the required constants from the `config/index.js` file
 const config = require("../config");
+// import the `labelTrip` function from the `services/placeQueries.js` file
+const { labelTrip } = require("./placeQueries");
 // import the required functions from the `services/scoring.js` file
 const { detectEvents, scoreTrip } = require("./scoring");
 
@@ -193,6 +195,9 @@ async function finalizeTrip(tripId) {
       end_longitude: last?.longitude ?? null,
       // start_label / end_label: filled by the places lookup ( not written yet )
     });
+
+  // wait for the labelling of the trip
+  await labelTrip(tripId);
 }
 
 // closes open trips whose newest sample is older than 'tripCloseWaitMs'
