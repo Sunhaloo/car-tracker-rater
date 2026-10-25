@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { apiRequest } from "@/lib/api"
+import { MIN_TRIP_DISTANCE_KM } from "@/lib/constants"
 
 // home page ==> the finished trips, newest first
 export function TripsPage() {
@@ -56,7 +57,8 @@ export function TripsPage() {
         <Card>
           <CardContent className="text-muted-foreground">
             No trips yet.{" "}
-            {!showShort && "Trips shorter than 1 km are hidden; turn on “Show short sessions” to see them."}
+            {!showShort &&
+              `Trips shorter than ${MIN_TRIP_DISTANCE_KM} km are hidden; turn on “Show short sessions” to see them.`}
           </CardContent>
         </Card>
       )}
