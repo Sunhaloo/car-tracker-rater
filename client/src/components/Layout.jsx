@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { Outlet } from "react-router-dom"
 import { NavBar } from "@/components/NavBar"
 
@@ -7,7 +8,10 @@ export function Layout() {
     <div className="min-h-svh">
       <NavBar />
       <main className="mx-auto max-w-6xl px-4 py-6">
-        <Outlet />
+        {/* lazy pages ( see `App.jsx` ) ==> shown while their code downloads, the nav bar stays */}
+        <Suspense fallback={<p className="text-muted-foreground">Loading…</p>}>
+          <Outlet />
+        </Suspense>
       </main>
     </div>
   )

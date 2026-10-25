@@ -41,6 +41,16 @@ export function formatDuration(startIso, endIso) {
   return `${Math.floor(minutes / 60)} h ${String(minutes % 60).padStart(2, "0")} min`
 }
 
+// how long ago, from a number of seconds ==> "12 s ago" / "5 min ago" / "3 h ago" / "2 days ago"
+export function formatAge(seconds) {
+  if (seconds === null) return "Never"
+  if (seconds < 60) return `${seconds} s ago`
+  if (seconds < 3600) return `${Math.floor(seconds / 60)} min ago`
+  if (seconds < 86400) return `${Math.floor(seconds / 3600)} h ago`
+  const days = Math.floor(seconds / 86400)
+  return `${days} ${days === 1 ? "day" : "days"} ago`
+}
+
 export function formatKm(km) {
   return km === null ? NO_DATA : `${km.toFixed(2)} km`
 }
