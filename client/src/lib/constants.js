@@ -11,6 +11,19 @@ export const MIN_TRIP_DISTANCE_KM = 1
 // fixed outer edge of the direction-meter in g ==> the same scale on every trip so they can be compared
 export const DIRECTION_METER_MAX_G = 0.6
 
+// map drawing ==> points at or below this speed are skipped ( the GPS position jitters while stopped )
+export const MIN_MAP_SPEED_KMH = 3
+
+// map drawing ==> two drawn points further apart than this ( GPS lost ) are not joined by a line
+export const MAX_ROUTE_GAP_S = 10
+
+// names of the three harsh event types sent by the API
+export const EVENT_LABELS = {
+  accel: "Hard accelerating",
+  brake: "Hard braking",
+  corner: "Hard cornering",
+}
+
 // score the "last 5 trips" average is compared against
 // WARNING: placeholder value ==> replace it once the scoring is calibrated on clean drives
 export const BASELINE_SCORE = 7

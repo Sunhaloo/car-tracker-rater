@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { EVENT_THRESHOLD_G } from "@/lib/constants"
+import { EVENT_LABELS, EVENT_THRESHOLD_G } from "@/lib/constants"
 
 // how many harsh events of each type ==> tells the driver what to work on
 // `counts` ==> `trip.events` from `GET /api/trips/:id`, `events` ==> the list from `GET /api/trips/:id/events`
@@ -10,9 +10,9 @@ export function EventCounts({ counts, events }) {
   const leftTurns = corners.length - rightTurns
 
   const rows = [
-    { label: "Hard accelerating", value: counts.accel },
-    { label: "Hard braking", value: counts.brake },
-    { label: "Hard cornering", value: counts.corner, detail: `${leftTurns} left, ${rightTurns} right` },
+    { label: EVENT_LABELS.accel, value: counts.accel },
+    { label: EVENT_LABELS.brake, value: counts.brake },
+    { label: EVENT_LABELS.corner, value: counts.corner, detail: `${leftTurns} left, ${rightTurns} right` },
   ]
 
   return (

@@ -18,6 +18,18 @@ export function formatDateTime(isoString) {
   return isoString ? dateTimeFormat.format(new Date(isoString)) : NO_DATA
 }
 
+// "14:03:27" in Mauritius time ==> for moments inside a trip
+const timeFormat = new Intl.DateTimeFormat("en-GB", {
+  timeZone: TIME_ZONE,
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+})
+
+export function formatTime(isoString) {
+  return isoString ? timeFormat.format(new Date(isoString)) : NO_DATA
+}
+
 // "1 h 05 min" / "24 min" / "45 s"
 export function formatDuration(startIso, endIso) {
   if (!startIso || !endIso) return NO_DATA

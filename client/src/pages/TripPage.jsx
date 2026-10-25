@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
+import { TripMap } from "@/components/map/TripMap"
 import { DirectionMeter } from "@/components/trip/DirectionMeter"
 import { EventCounts } from "@/components/trip/EventCounts"
+import { RouteLegend } from "@/components/trip/RouteLegend"
 import { TripHeader } from "@/components/trip/TripHeader"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { apiRequest } from "@/lib/api"
 
 // the main page ==> everything about one trip
@@ -20,11 +22,13 @@ export function TripPage() {
     Promise.all([
       apiRequest(`/api/trips/${id}`),
       apiRequest(`/api/trips/${id}/events`),
+      // one point per second ==> the route on the map ( and the charts later )
+      apiRequest(`/api/trips/${id}/track`),
       // the 5 newest rated trips ==> the "last 5" overlay on the direction-meter
       apiRequest("/api/trips?limit=5"),
     ])
-      .then(([trip, events, recentTrips]) => {
-        if (!ignore) setResult({ id, data: { trip, events, recentTrips }, error: "" })
+      .then(([trip, events, track, recentTrips]) => {
+        if (!ignore) setResult({ id, data: { trip, events, track, recentTrips }, error: "" })
       })
       .catch((err) => {
         if (!ignore) setResult({ id, data: null, error: err.message })
@@ -62,11 +66,23 @@ export function TripPage() {
     )
   }
 
-  const { trip, events, recentTrips } = result.data
+  const { trip, events, track, recentTrips } = result.data
 
   return (
     <div className="flex flex-col gap-6">
       <TripHeader trip={trip} />
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Route</CardTitle>
+          <CardDescription>Coloured by how hard the car was pushed (resultant G). Click a pin for details.</CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4">
+          <TripMap track={track} events={events} />
+          <RouteLegend />
+        </CardContent>
+      </Card>
+
       <div className="grid gap-6 md:grid-cols-2">
         <EventCounts counts={trip.events} events={events} />
         <DirectionMeter trip={trip} recentTrips={recentTrips} />

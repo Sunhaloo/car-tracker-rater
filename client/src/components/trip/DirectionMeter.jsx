@@ -1,6 +1,7 @@
 import { PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart } from "recharts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ChartContainer, ChartLegend, ChartLegendContent } from "@/components/ui/chart"
+import { DirectionTooltip } from "@/components/trip/DirectionTooltip"
+import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip } from "@/components/ui/chart"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { DIRECTION_METER_MAX_G, EVENT_THRESHOLD_G } from "@/lib/constants"
 
@@ -43,8 +44,9 @@ export function DirectionMeter({ trip, recentTrips }) {
     averageValue: lastFive.length > 0 ? averageOf(lastFive, axis.key) : null,
   }))
 
+  // `trip` / `average` are drawn --> `tripValue` / `averageValue` ride along for the hover box
   const chartData = rows.map((row) => ({
-    direction: row.direction,
+    ...row,
     trip: toScale(row.tripValue),
     average: toScale(row.averageValue),
     threshold: EVENT_THRESHOLD_G,
@@ -81,7 +83,16 @@ export function DirectionMeter({ trip, recentTrips }) {
                 fillOpacity={0.1}
               />
             )}
-            <Radar dataKey="trip" stroke="var(--color-trip)" strokeWidth={2} fill="var(--color-trip)" fillOpacity={0.3} />
+            <Radar
+              dataKey="trip"
+              stroke="var(--color-trip)"
+              strokeWidth={2}
+              fill="var(--color-trip)"
+              fillOpacity={0.3}
+              dot={{ r: 4, fillOpacity: 1 }}
+              activeDot={{ r: 6 }}
+            />
+            <ChartTooltip content={<DirectionTooltip />} />
             <ChartLegend content={<ChartLegendContent />} />
           </RadarChart>
         </ChartContainer>
