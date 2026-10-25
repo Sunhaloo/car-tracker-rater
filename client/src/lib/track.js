@@ -58,3 +58,24 @@ export function routeSegments(points) {
   // a line needs at least two points ==> a lonely point between two gaps cannot be drawn
   return segments.filter((segment) => segment.positions.length > 1)
 }
+
+// drawn point closest in time to `timeMs` ==> where the car was at a moment hovered on a chart
+// NOTE: binary search ( points are oldest first ) --> fast enough to run on every mouse move
+export function nearestPoint(points, timeMs) {
+  if (points.length === 0) return null
+  let low = 0
+  let high = points.length - 1
+
+  // narrow down to the first point at or after `timeMs`
+  while (low < high) {
+    const middle = Math.floor((low + high) / 2)
+    if (new Date(points[middle].time).getTime() < timeMs) low = middle + 1
+    else high = middle
+  }
+
+  // the point just before may be closer
+  const before = points[Math.max(low - 1, 0)]
+  const after = points[low]
+  const distance = (point) => Math.abs(new Date(point.time).getTime() - timeMs)
+  return distance(before) <= distance(after) ? before : after
+}

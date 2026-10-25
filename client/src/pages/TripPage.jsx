@@ -4,6 +4,7 @@ import { TripMap } from "@/components/map/TripMap"
 import { DirectionMeter } from "@/components/trip/DirectionMeter"
 import { EventCounts } from "@/components/trip/EventCounts"
 import { RouteLegend } from "@/components/trip/RouteLegend"
+import { TripCharts } from "@/components/trip/TripCharts"
 import { TripHeader } from "@/components/trip/TripHeader"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -14,6 +15,8 @@ export function TripPage() {
   const { id } = useParams()
   // `result.id` remembers which trip the data is for ==> a different `id` in the URL means "still loading"
   const [result, setResult] = useState({ id: null, data: null, error: "" })
+  // moment under the mouse on a chart ( ms ) ==> the map shows a dot there
+  const [hoverTime, setHoverTime] = useState(null)
 
   useEffect(() => {
     // the user can leave before the answers arrive ==> ignore answers for an old `id`
@@ -72,21 +75,27 @@ export function TripPage() {
     <div className="flex flex-col gap-6">
       <TripHeader trip={trip} />
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Route</CardTitle>
-          <CardDescription>Coloured by how hard the car was pushed (resultant G). Click a pin for details.</CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
-          <TripMap track={track} events={events} />
-          <RouteLegend />
-        </CardContent>
-      </Card>
-
       <div className="grid gap-6 md:grid-cols-2">
         <EventCounts counts={trip.events} events={events} />
         <DirectionMeter trip={trip} recentTrips={recentTrips} />
       </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Route</CardTitle>
+          <CardDescription>
+            Coloured by how hard the car was pushed (resultant G). Click a pin for details, or hover a chart below to
+            follow the car.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4">
+          <TripMap track={track} events={events} highlightTime={hoverTime} />
+          <RouteLegend />
+        </CardContent>
+      </Card>
+
+      {/* the charts sit right under the map ==> the hover dot stays in view */}
+      <TripCharts track={track} onHoverTime={setHoverTime} />
     </div>
   )
 }

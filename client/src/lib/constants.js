@@ -17,6 +17,9 @@ export const MIN_MAP_SPEED_KMH = 3
 // map drawing ==> two drawn points further apart than this ( GPS lost ) are not joined by a line
 export const MAX_ROUTE_GAP_S = 10
 
+// charts ==> a long track is shrunk to about this many points ( keeping the peaks )
+export const CHART_POINTS = 600
+
 // names of the three harsh event types sent by the API
 export const EVENT_LABELS = {
   accel: "Hard accelerating",

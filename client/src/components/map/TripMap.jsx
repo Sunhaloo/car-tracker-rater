@@ -1,19 +1,33 @@
 import "leaflet/dist/leaflet.css"
 import { useMemo } from "react"
-import { MapContainer, Marker, Popup, Polyline, TileLayer } from "react-leaflet"
+import { CircleMarker, MapContainer, Marker, Popup, Polyline, TileLayer } from "react-leaflet"
 import { EventPopup } from "@/components/map/EventPopup"
 import { eventIcon, labelIcon } from "@/components/map/markerIcons"
-import { mapPoints, ROUTE_BUCKETS, routeSegments } from "@/lib/track"
+import { mapPoints, nearestPoint, ROUTE_BUCKETS, routeSegments } from "@/lib/track"
+
+// built once ==> the map re-renders on every chart hover, and a new icon object would redraw every pin
+const ICONS = {
+  start: labelIcon("Start"),
+  end: labelIcon("End"),
+  accel: eventIcon("accel"),
+  brake: eventIcon("brake"),
+  corner: eventIcon("corner"),
+}
 
 // the route of one trip on OpenStreetMap
 // NOTE: the only component pages use for maps ==> swapping the map library only touches `components/map/`
 // `track` ==> `GET /api/trips/:id/track`, `events` ==> `GET /api/trips/:id/events`
-export function TripMap({ track, events }) {
+// `highlightTime` ==> moment hovered on a chart ( ms ), shown as a dot on the route ( or `null` )
+export function TripMap({ track, events, highlightTime = null }) {
   // thousands of rows ==> only recompute when the data itself changes
   const points = useMemo(() => mapPoints(track), [track])
   const segments = useMemo(() => routeSegments(points), [points])
   // events during a GPS no-fix have no position ==> they cannot be pinned
-  const pinnedEvents = events.filter((event) => event.latitude !== null && event.longitude !== null)
+  const pinnedEvents = useMemo(
+    () => events.filter((event) => event.latitude !== null && event.longitude !== null),
+    [events],
+  )
+  const highlighted = highlightTime === null ? null : nearestPoint(points, highlightTime)
 
   if (points.length === 0) {
     return (
@@ -50,20 +64,29 @@ export function TripMap({ track, events }) {
           />
         ))}
 
-        <Marker position={[first.latitude, first.longitude]} icon={labelIcon("Start")} />
-        <Marker position={[last.latitude, last.longitude]} icon={labelIcon("End")} />
+        <Marker position={[first.latitude, first.longitude]} icon={ICONS.start} />
+        <Marker position={[last.latitude, last.longitude]} icon={ICONS.end} />
 
         {pinnedEvents.map((event) => (
           <Marker
             key={`${event.type}-${event.started_at}`}
             position={[event.latitude, event.longitude]}
-            icon={eventIcon(event.type)}
+            icon={ICONS[event.type]}
           >
             <Popup>
               <EventPopup event={event} />
             </Popup>
           </Marker>
         ))}
+
+        {/* where the car was at the moment hovered on a chart */}
+        {highlighted && (
+          <CircleMarker
+            center={[highlighted.latitude, highlighted.longitude]}
+            radius={7}
+            pathOptions={{ color: "#171717", weight: 3, fillColor: "#ffffff", fillOpacity: 1 }}
+          />
+        )}
       </MapContainer>
 
       {unpinned > 0 && (

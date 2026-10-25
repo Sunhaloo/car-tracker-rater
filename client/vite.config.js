@@ -10,4 +10,17 @@ export default defineConfig({
     // `@/lib/api` ==> `src/lib/api` ( same alias as in `jsconfig.json` )
     alias: { '@': path.resolve(import.meta.dirname, './src') },
   },
+  build: {
+    rolldownOptions: {
+      output: {
+        // the two big libraries get their own files ==> smaller downloads, cached separately
+        codeSplitting: {
+          groups: [
+            { name: 'charts', test: /node_modules[\\/](recharts|d3-|victory-vendor)/ },
+            { name: 'map', test: /node_modules[\\/](leaflet|react-leaflet|@react-leaflet)/ },
+          ],
+        },
+      },
+    },
+  },
 })
