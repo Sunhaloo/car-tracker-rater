@@ -1,4 +1,5 @@
 import { DevicesSection } from "@/components/settings/DevicesSection"
+import { PlacesSection } from "@/components/settings/PlacesSection"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 // the user's ThingSpeak devices and personal places
@@ -16,7 +17,7 @@ export function SettingsPage() {
           <DevicesSection />
         </TabsContent>
         <TabsContent value="places">
-          <p className="text-muted-foreground">Places are added in the next step.</p>
+          <PlacesSection />
         </TabsContent>
       </Tabs>
     </div>

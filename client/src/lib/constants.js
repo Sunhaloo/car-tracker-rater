@@ -27,6 +27,15 @@ export const EVENT_LABELS = {
   corner: "Hard cornering",
 }
 
+// personal places ==> radius limits in metres
+// WARNING: must match `placeRadiusMinM` / `placeRadiusMaxM` / `defaultPlaceRadiusM` in `server/config/index.js`
+export const PLACE_RADIUS_MIN_M = 20
+export const PLACE_RADIUS_MAX_M = 2000
+export const PLACE_RADIUS_DEFAULT_M = 150
+
+// where the place picker opens when there is no pin yet ==> the whole of Mauritius
+export const MAURITIUS_CENTER = [-20.25, 57.55]
+
 // score the "last 5 trips" average is compared against
 // WARNING: placeholder value ==> replace it once the scoring is calibrated on clean drives
 export const BASELINE_SCORE = 7
