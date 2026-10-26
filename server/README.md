@@ -71,7 +71,7 @@ flowchart LR
 | A **new trip** starts when    | it is the first sample, the ESP32 **rebooted** ( `uptime` went down ) or there is a **gap of more than 5 minutes**                 |
 | A trip is **closed** when     | its newest sample is **older than 3 minutes**                                                                                      |
 | Late rows ( hotspot dropout ) | land in the right trip, even a closed one, and its summary is recomputed                                                           |
-| **Distance**                  | `speed / 3.6 * seconds` since the previous row ( the gap is capped at 5 s ), **not** GPS positions, because GPS jitters when stopped |
+| **Distance**                  | each row adds $\frac{v}{3.6} \cdot \min(\Delta t,\ 5)$ metres ( $v$ is the speed in km/h and $\Delta t$ the seconds since the previous row, capped at 5 s ), **not** GPS positions, because GPS jitters when stopped |
 | Trips under **1 km**          | get **no score** ( the API rates them "Not enough data" ) and are hidden from the list unless `all=true`                           |
 
 ## Scoring
@@ -85,10 +85,11 @@ flowchart LR
 
 An **event** is a run of consecutive over-threshold rows of one type, counted **once**.
 
-```
-events per 10 km = events / ( distance in km / 10 )
-score            = clamp( 10 - 10 * events per 10 km / rBad , 0 , 10 )
-```
+$$E_{10} = \frac{N}{d / 10}$$
+
+$$\text{score} = \operatorname{clamp}\left(10 - \frac{10 \cdot E_{10}}{r_{\text{bad}}},\ 0,\ 10\right)$$
+
+where $N$ is the number of harsh events, $d$ is the distance in km, $E_{10}$ is the number of events per 10 km and $r_{\text{bad}}$ ( `rBad` in `config/index.js` ) is the event rate that gives a score of 0.
 
 | Score        | Rating     |
 | ------------ | ---------- |
@@ -96,7 +97,7 @@ score            = clamp( 10 - 10 * events per 10 km / rBad , 0 , 10 )
 | 4 to below 8 | **Normal** |
 | 8 or more    | **Good**   |
 
-A **higher** score is a better driver. `rBad` is the event rate that gives a score of 0.
+A **higher** score is a better driver.
 
 ## Place names
 
