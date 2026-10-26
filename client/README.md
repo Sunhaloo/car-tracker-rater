@@ -67,7 +67,7 @@ flowchart LR
 
   Pins **A**, **B** and **C** mark the hard accelerations, brakings and corners ( click one for the details ), and `Start` / `End` mark the ends of the route
 
-- **Charts**: speed, and longitudinal + lateral G with dashed lines at ± 0.30 g. Hovering a chart moves a dot along the route on the map
+- **Charts**: speed, and longitudinal + lateral G with dashed lines at +/- 0.30 g. Hovering a chart moves a dot along the route on the map
 
 > [!NOTE]
 > The map only draws points that have a GPS position **and** a speed above 3 km/h ( the GPS position jitters while the car is stopped ), and it does **not** join two points that are more than 10 seconds apart ( _a tunnel would otherwise be a straight line through the buildings_ ). The data itself is never changed, this only affects what is drawn.
@@ -123,7 +123,7 @@ npm run dev
 npm run dev
 ```
 
-The app is now available at `http://localhost:5173/`. Click **Register** to create an account, then add your ThingSpeak channel inside `Settings` → `Devices`.
+The app is now available at `http://localhost:5173/`. Click **Register** to create an account, then add your ThingSpeak channel inside `Settings` > `Devices`.
 
 > [!IMPORTANT]
 > You **must** use port `5173`! The API's CORS rule only allows the origin `http://localhost:5173`. If that port is already taken, Vite will quietly pick another one ( `5174` ... ) and every request will be blocked by the browser. If that happens, stop whatever is using `5173`.

@@ -58,7 +58,7 @@ flowchart LR
 > The IMU talks over I2C at address `0x68`.
 
 > [!WARNING]
-> The diagram connects the LEDs **straight** to the pins. That is fine for LED _modules_ that already have a resistor on them, but if you are using bare LEDs, put a resistor ( around 220 Ω ) in series with each one.
+> The diagram connects the LEDs **straight** to the pins. That is fine for LED _modules_ that already have a resistor on them, but if you are using bare LEDs, put a resistor ( around 220 ohm ) in series with each one.
 
 ---
 
@@ -68,7 +68,7 @@ flowchart LR
 
 2. Add support for the ESP32 boards:
 
-   - Open `File` → `Preferences` and paste the following inside the "_Additional boards manager URLs_" box:
+   - Open `File` > `Preferences` and paste the following inside the "_Additional boards manager URLs_" box:
 
    ```
    https://espressif.github.io/arduino-esp32/package_esp32_index.json
@@ -102,7 +102,7 @@ flowchart LR
    | `field1` | Speed          | km/h                                                |
    | `field2` | Longitudinal G | positive when accelerating, negative when braking   |
    | `field3` | Lateral G      | positive when turning **right**, negative when left |
-   | `field4` | Yaw rate       | °/s, positive when turning **right**                |
+   | `field4` | Yaw rate       | deg/s, positive when turning **right**                |
    | `field5` | Uptime         | seconds since the ESP32 booted                      |
    | `field6` | Status bits    | see [Status bits](#status-bits)                     |
 
@@ -137,8 +137,8 @@ flowchart LR
 
 7. Plug the ESP32 in with a USB cable ( _a data cable, not a charge-only one_ ), then in the Arduino IDE:
 
-   - `Tools` → `Board` → `esp32` → **ESP32 Dev Module**
-   - `Tools` → `Port` → the port of your board
+   - `Tools` > `Board` > `esp32` > **ESP32 Dev Module**
+   - `Tools` > `Port` > the port of your board
    - Click **Upload**
 
    > [!TIP]
@@ -163,7 +163,7 @@ The board must be:
 
 The sign rules that the whole project uses ( the same for the database and the charts ):
 
-| Value          | Positive ( + )    | Negative ( − )   |
+| Value          | Positive ( + )    | Negative ( - )   |
 | -------------- | ----------------- | ---------------- |
 | Longitudinal G | accelerating      | braking          |
 | Lateral G      | turning **right** | turning **left** |
