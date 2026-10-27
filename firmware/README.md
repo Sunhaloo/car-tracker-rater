@@ -81,12 +81,12 @@ flowchart LR
    - `MPU9250_WE` by Wolfgang Ewald
    - `TinyGPSPlus` by Mikal Hart
 
-   > [!NOTE]
-   > There is **no** library called `MPU6500_WE`! Wolfgang Ewald's `MPU9250_WE` library covers the MPU6500 as well, which is why the sketch has `#include <MPU6500_WE.h>`; that header is part of `MPU9250_WE`.
+> [!NOTE]
+> There is **no** library called `MPU6500_WE`! Wolfgang Ewald's `MPU9250_WE` library covers the MPU6500 as well, which is why the sketch has `#include <MPU6500_WE.h>`; that header is part of `MPU9250_WE`.
 
-   > WiFi, HTTP and I2C libraries ( `WiFi.h`, `HTTPClient.h`, `Wire.h` ... ) come with the ESP32 package, so there is nothing else to install.
+> WiFi, HTTP and I2C libraries ( `WiFi.h`, `HTTPClient.h`, `Wire.h` ... ) come with the ESP32 package, so there is nothing else to install.
 
-4. Clone the repository and open the sketch:
+1. Clone the repository and open the sketch:
 
    ```bash
    git clone <repository-url>
@@ -95,20 +95,20 @@ flowchart LR
    firmware/car_tracker/car_tracker.ino
    ```
 
-5. Create your **ThingSpeak** channel ( free account, **private** channel ) with the following fields:
+2. Create your **ThingSpeak** channel ( free account, **private** channel ) with the following fields:
 
    | Field    | Name           | Meaning                                             |
    | -------- | -------------- | --------------------------------------------------- |
    | `field1` | Speed          | km/h                                                |
    | `field2` | Longitudinal G | positive when accelerating, negative when braking   |
    | `field3` | Lateral G      | positive when turning **right**, negative when left |
-   | `field4` | Yaw rate       | deg/s, positive when turning **right**                |
+   | `field4` | Yaw rate       | deg/s, positive when turning **right**              |
    | `field5` | Uptime         | seconds since the ESP32 booted                      |
    | `field6` | Status bits    | see [Status bits](#status-bits)                     |
 
    `field7` and `field8` are not used. The **latitude**, **longitude**, **elevation** and **status** text are ThingSpeak's own built-in keys, so nothing to create for those.
 
-6. Create your `secrets.h` file **next to** the `.ino` file by copying the example one:
+3. Create your `secrets.h` file **next to** the `.ino` file by copying the example one:
 
    ```bash
    cd firmware/car_tracker
@@ -127,24 +127,24 @@ flowchart LR
    #define WRITE_API_KEY "<thingspeak-write-key>"
    ```
 
-   > [!WARNING]
-   > `secrets.h` is listed inside the `.gitignore` file and should **never** be committed!
-   >
-   > Only the **write** key goes in here. The **read** key is _not_ used by the ESP32; you enter it ( together with the channel ID ) inside the web app's `Settings` page.
+> [!WARNING]
+> `secrets.h` is listed inside the `.gitignore` file and should **never** be committed!
+>
+> Only the **write** key goes in here. The **read** key is _not_ used by the ESP32; you enter it ( together with the channel ID ) inside the web app's `Settings` page.
 
-   > [!TIP]
-   > The ESP32 only supports **2.4 GHz** WiFi. If your phone's hotspot is dual-band, make sure it is broadcasting on 2.4 GHz.
+> [!TIP]
+> The ESP32 only supports **2.4 GHz** WiFi. If your phone's hotspot is dual-band, make sure it is broadcasting on 2.4 GHz.
 
-7. Plug the ESP32 in with a USB cable ( _a data cable, not a charge-only one_ ), then in the Arduino IDE:
+1. Plug the ESP32 in with a USB cable ( _a data cable, not a charge-only one_ ), then in the Arduino IDE:
 
    - `Tools` > `Board` > `esp32` > **ESP32 Dev Module**
    - `Tools` > `Port` > the port of your board
    - Click **Upload**
 
-   > [!TIP]
-   > If the upload gets stuck on `Connecting...`, hold the `BOOT` button on the board until it starts writing.
+> [!TIP]
+> If the upload gets stuck on `Connecting...`, hold the `BOOT` button on the board until it starts writing.
 
-8. Open the **Serial Monitor** at `115200` baud. You should see the messages from [Serial monitor messages](#serial-monitor-messages).
+1. Open the **Serial Monitor** at `115200` baud. You should see the messages from [Serial monitor messages](#serial-monitor-messages).
 
 ---
 

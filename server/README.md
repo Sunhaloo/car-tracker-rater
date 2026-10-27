@@ -87,7 +87,7 @@ An **event** is a run of consecutive over-threshold rows of one type, counted **
 
 $$E_{10} = \frac{N}{d / 10}$$
 
-$$\text{score} = \operatorname{clamp}\left(10 - \frac{10 \cdot E_{10}}{r_{\text{bad}}},\ 0,\ 10\right)$$
+$$\text{score} = \min\left(10,\ \max\left(0,\ 10 - \frac{10 \cdot E_{10}}{r_{\text{bad}}}\right)\right)$$
 
 where $N$ is the number of harsh events, $d$ is the distance in km, $E_{10}$ is the number of events per 10 km and $r_{\text{bad}}$ ( `rBad` in `config/index.js` ) is the event rate that gives a score of 0.
 
