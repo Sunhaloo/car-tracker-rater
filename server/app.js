@@ -1,8 +1,3 @@
-// WARNING: remove in production ==> for development purposes
-console.log(
-  `\n\n\t-- Server Started At: ${new Date().toLocaleTimeString()} --\n\n`,
-);
-
 // import the data found in our `.env` file
 // NOTE: loaded first so every file required below can already read 'process.env'
 require("dotenv").config();

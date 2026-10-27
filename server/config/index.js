@@ -19,9 +19,8 @@ module.exports = {
   thingspeakMaxRows: 8000,
 
   // scoring ==> event rate ( events per 10 km ) that gives a score of 0
-  // WARNING: using placeholder value '5' ==> needs to be calibrated on real drives
-  // rough drives = 0-3, good normal drives = 4-7, smooth drives = 8-10
-  rBad: 5,
+  // rough drives = 0-3, good normal drives = 4-7, smooth drives = 8-10 ( or more )
+  rBad: 200,
 
   // rating cut-offs on the 0-10 score
   // INFO:
